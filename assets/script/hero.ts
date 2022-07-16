@@ -1,4 +1,12 @@
-import { _decorator, Component, Node, KeyCode, Vec2, Animation } from "cc";
+import {
+  _decorator,
+  Component,
+  Node,
+  KeyCode,
+  Vec2,
+  Animation,
+  RigidBody2D,
+} from "cc";
 const { ccclass, property } = _decorator;
 import { AxInput } from "./Axinput";
 
@@ -7,7 +15,7 @@ const Input = AxInput.instance;
 @ccclass("hero")
 export class hero extends Component {
   // 移动速度
-  private speed = 200;
+  private speed = 20;
   // 角色状态
   private state = "";
   // 角色坐标
@@ -44,14 +52,25 @@ export class hero extends Component {
     }
 
     // 移动位置
-    let heroXY = this.node.getPosition();
-    if (this.sp.x) {
-      heroXY.x += this.sp.x * this.speed * dt;
+    // let heroXY = this.node.getPosition();
+    // if (this.sp.x) {
+    //   heroXY.x += this.sp.x * this.speed * dt;
+    // }
+    // if (this.sp.y) {
+    //   heroXY.y += this.sp.y * this.speed * dt;
+    // }
+    // this.node.setPosition(heroXY);
+    let rb = this.getComponent(RigidBody2D);
+    let lv = rb!.linearVelocity;
+
+    if (this.sp.x || this.sp.y) {
+      lv.x = this.sp.x * this.speed;
+      lv.y = this.sp.y * this.speed;
+    } else {
+      lv.y = lv.x = 0;
     }
-    if (this.sp.y) {
-      heroXY.y += this.sp.y * this.speed * dt;
-    }
-    this.node.setPosition(heroXY);
+
+    rb!.linearVelocity = lv;
 
     // 修改状态 动画
     let state = "";

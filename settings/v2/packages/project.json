@@ -6,5 +6,23 @@
       "fitWidth": true,
       "fitHeight": true
     }
+  },
+  "layer": [],
+  "physics": {
+    "collisionMatrix": {
+      "0": 1,
+      "1": 4,
+      "2": 2
+    },
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "wall"
+      },
+      {
+        "index": 2,
+        "name": "hero"
+      }
+    ]
   }
 }
